@@ -20,7 +20,7 @@ const resolvers = {
     Query: {
         me: () => {
             return {
-                username: '百獣団長クロコダイン'
+                username: '百獣魔団長クロコダイン'
             };
         },
     },
