@@ -1,13 +1,16 @@
 import express from 'express';
 import { ApolloServer, gql } from 'apollo-server-express';
 
+import { users } from './mockData';
+
 // appに向かっていろいろ設定する
 const app = express();
 
 // schemaをつくる
 const schema = gql`
   type Query {
-    me: User
+    me: User,
+    users: [User],
   }
   
   type User {
@@ -23,6 +26,9 @@ const resolvers = {
                 username: '百獣魔団長クロコダイン'
             };
         },
+        users: () => {
+            return users;
+        }
     },
 };
 
