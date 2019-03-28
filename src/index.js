@@ -9,7 +9,14 @@ const app = express();
 // schemaをつくる
 const schema = gql`
   type Query {
+    """
+    ログイン中のユーザ情報を返す
+    """
     me: User,
+
+    """
+    ユーザの一覧を返す
+    """
     users: [User],
   }
   
