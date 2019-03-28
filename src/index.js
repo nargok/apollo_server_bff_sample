@@ -20,6 +20,13 @@ const schema = gql`
     users: [User],
   }
   
+  type Mutation {
+    """
+    ユーザを追加する
+    """
+    createUser(username: String!): User
+  }
+
   type User {
     username: String!
   }
@@ -37,6 +44,20 @@ const resolvers = {
             return users;
         }
     },
+
+    Mutation: {
+        // 画面入力項目は第2引数にする
+        createUser: (parent, {username}) => {
+            const user = {
+                username: username
+            };
+
+            // user情報に入力したuser情報を追加する
+            users.push(user);
+
+            return user;
+        }
+    }
 };
 
 // ApolloServerの設定をする
