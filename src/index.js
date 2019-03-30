@@ -2,6 +2,7 @@ import express from 'express';
 import { ApolloServer, gql } from 'apollo-server-express';
 
 import { users } from './mockData';
+import {RESTDataSource} from "apollo-datasource-rest";
 
 // appに向かっていろいろ設定する
 const app = express();
@@ -18,6 +19,11 @@ const schema = gql`
     ユーザの一覧を返す
     """
     users: [User],
+    
+    """
+    ランダムな犬の画像を返す
+    """
+    randomDog: Dog
   }
   
   type Mutation {
@@ -30,7 +36,24 @@ const schema = gql`
   type User {
     username: String!
   }
+  
+  type Dog {
+    image: String
+    status: String!
+  }
 `;
+
+// REST APIとの通信設定をする
+class DogAPI extends RESTDataSource {
+    constructor() {
+        super();
+        this.baseURL = "https://dog.ceo/api/";
+    }
+
+    // async getRandomDog() {
+    //     return await this.get("breeds/image/random");
+    // }
+}
 
 // resolverをつくる こっちはObject
 const resolvers = {
@@ -42,6 +65,12 @@ const resolvers = {
         },
         users: () => {
             return users;
+        },
+        randomDog: (parent, args, { dataSources }) => {
+            const dog = { image: 'image', status: 'OK' };
+            console.log('helo')
+            return dog
+            // return dataSources.DogAPI.getRandomDog();
         }
     },
 
@@ -64,7 +93,11 @@ const resolvers = {
 const server = new ApolloServer({
     typeDefs: schema,
     resolvers,
-})
+    tracing: true,
+    dataSources: () => ({
+        dogAPI: new DogAPI()
+    })
+});
 
 // Middleware設定をする graphqlをエンドポイントに付与する
 server.applyMiddleware({ app, path: '/graphql' });
