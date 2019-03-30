@@ -1,57 +1,15 @@
 import express from 'express';
-import { ApolloServer, gql } from 'apollo-server-express';
+import { ApolloServer } from 'apollo-server-express';
 
 import { users } from './mockData';
 import {RESTDataSource} from "apollo-datasource-rest";
 
+// schemaをimport
+import schema from './schema';
+
 // appに向かっていろいろ設定する
 const app = express();
 
-// schemaをつくる
-const schema = gql`
-  type Query {
-    """
-    ログイン中のユーザ情報を返す
-    """
-    me: User,
-
-    """
-    ユーザの一覧を返す
-    """
-    users: [User],
-    
-    """
-    ランダムな犬の画像を返す
-    """
-    randomDog: Dog
-    
-    """
-    ハスキー画像の一覧を返す
-    """
-    huskyCrazy: HuskyList
-  }
-  
-  type Mutation {
-    """
-    ユーザを追加する
-    """
-    createUser(username: String!): User
-  }
-
-  type User {
-    username: String!
-  }
-  
-  type Dog {
-    image: String
-    status: String!
-  }
-  
-  type HuskyList {
-    images: [String]
-    status: String!
-  }
-`;
 
 // REST APIとの通信設定をする
 class DogAPI extends RESTDataSource {
