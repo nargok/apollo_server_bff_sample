@@ -25,6 +25,9 @@ const schema = gql`
     """
     randomDog: Dog
     
+    """
+    ハスキー画像の一覧を返す
+    """
     huskyCrazy: HuskyList
   }
   
@@ -58,7 +61,11 @@ class DogAPI extends RESTDataSource {
     }
 
     async getRandomDog() {
-        return this.get("breeds/image/random");
+        const res = await this.get("breeds/image/random");
+        return {
+            image: res.message,
+            status: res.status
+        }
     }
 
     async getAllHusky() {
@@ -82,10 +89,7 @@ const resolvers = {
             return users;
         },
         randomDog: async (parent, args, { dataSources }) => {
-            // const dog = { image: 'image', status: 'OK' };
-            // console.log('helo')
-            // return dog
-            return dataSources.DogAPI.getRandomDog();
+            return dataSources.dogAPI.getRandomDog();
         },
         huskyCrazy: async (parent, args, { dataSources }) => {
             return dataSources.dogAPI.getAllHusky();
