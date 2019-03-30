@@ -1,41 +1,17 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 
-import {RESTDataSource} from "apollo-datasource-rest";
-
-// schemaをimport
+// schema, resolver, restServiceをimport
 import schema from './schema';
 import resolvers from './resolvers';
+import DogAPI from './restServices/dogAPI';
 
 // appに向かっていろいろ設定する
 const app = express();
 
 // schemaをつくる
 
-
 // REST APIとの通信設定をする
-class DogAPI extends RESTDataSource {
-    constructor() {
-        super();
-        this.baseURL = "https://dog.ceo/api/";
-    }
-
-    async getRandomDog() {
-        const res = await this.get("breeds/image/random");
-        return {
-            image: res.message,
-            status: res.status
-        }
-    }
-
-    async getAllHusky() {
-        const res = await this.get('breed/husky/images');
-        return {
-            images: res.message,
-            status: res.status
-        }
-    }
-}
 
 // resolverをつくる こっちはObject
 
