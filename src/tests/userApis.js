@@ -13,3 +13,15 @@ export const users = async variables =>
     `,
     variables
   });
+
+export const me = async variables =>
+  axios.post(API_URL, {
+    query: `
+      query {
+        me {
+          username
+        }
+      }
+    `,
+    variables
+  });
