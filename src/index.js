@@ -24,6 +24,8 @@ const schema = gql`
     ランダムな犬の画像を返す
     """
     randomDog: Dog
+    
+    huskyCrazy: HuskyList
   }
   
   type Mutation {
@@ -41,6 +43,11 @@ const schema = gql`
     image: String
     status: String!
   }
+  
+  type HuskyList {
+    images: [String]
+    status: String!
+  }
 `;
 
 // REST APIとの通信設定をする
@@ -50,9 +57,17 @@ class DogAPI extends RESTDataSource {
         this.baseURL = "https://dog.ceo/api/";
     }
 
-    // async getRandomDog() {
-    //     return await this.get("breeds/image/random");
-    // }
+    async getRandomDog() {
+        return this.get("breeds/image/random");
+    }
+
+    async getAllHusky() {
+        const res = await this.get('breed/husky/images');
+        return {
+            images: res.message,
+            status: res.status
+        }
+    }
 }
 
 // resolverをつくる こっちはObject
@@ -66,11 +81,14 @@ const resolvers = {
         users: () => {
             return users;
         },
-        randomDog: (parent, args, { dataSources }) => {
-            const dog = { image: 'image', status: 'OK' };
-            console.log('helo')
-            return dog
-            // return dataSources.DogAPI.getRandomDog();
+        randomDog: async (parent, args, { dataSources }) => {
+            // const dog = { image: 'image', status: 'OK' };
+            // console.log('helo')
+            // return dog
+            return dataSources.DogAPI.getRandomDog();
+        },
+        huskyCrazy: async (parent, args, { dataSources }) => {
+            return dataSources.dogAPI.getAllHusky();
         }
     },
 
