@@ -1,35 +1,13 @@
-import express from 'express';
-import { ApolloServer } from 'apollo-server-express';
+// server系のimport express, ApolloServer
 
-// schema, resolver, restServiceをimport
-import schema from './schema';
-import resolvers from './resolvers';
-import DogAPI from './restServices/dogAPI';
-
-// appに向かっていろいろ設定する
-const app = express();
+// expressからappインスタンスの作成
 
 // schemaをつくる
 
-// REST APIとの通信設定をする
-
-// resolverをつくる こっちはObject
-
+// resolverをつくる
 
 // ApolloServerの設定をする
-const server = new ApolloServer({
-    typeDefs: schema,
-    resolvers,
-    tracing: true,
-    dataSources: () => ({
-        dogAPI: new DogAPI()
-    })
-});
 
 // Middleware設定をする graphqlをエンドポイントに付与する
-server.applyMiddleware({ app, path: '/graphql' });
 
 // サーバー起動の設定をする
-app.listen({ port: 8080 }, () => {
-   console.log('Apollo Server on http://localhost:8080/graphql');
-});
