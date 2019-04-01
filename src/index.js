@@ -5,6 +5,7 @@ import { ApolloServer } from 'apollo-server-express';
 import schema from './schema';
 import resolvers from './resolvers';
 import DogAPI from './restServices/dogAPI';
+import JsonPlaceHolderAPI from './restServices/jsonPlaceholderAPI';
 
 // appに向かっていろいろ設定する
 const app = express();
@@ -22,7 +23,8 @@ const server = new ApolloServer({
     resolvers,
     tracing: true,
     dataSources: () => ({
-        dogAPI: new DogAPI()
+        dogAPI: new DogAPI(),
+        jsonPlaceholderAPI: new JsonPlaceHolderAPI(),
     })
 });
 
