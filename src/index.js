@@ -1,12 +1,15 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
+import dotenv from 'dotenv';
 
 // schema, resolver, restServiceをimport
 import schema from './schema';
 import resolvers from './resolvers';
 import DogAPI from './restServices/dogAPI';
 import JsonPlaceHolderAPI from './restServices/jsonPlaceholderAPI';
+import CatAPI from "./restServices/catAPI";
 
+dotenv.config();
 // appに向かっていろいろ設定する
 const app = express();
 
@@ -15,17 +18,23 @@ const app = express();
 // REST APIとの通信設定をする
 
 // resolverをつくる こっちはObject
-
-
 // ApolloServerの設定をする
 const server = new ApolloServer({
     typeDefs: schema,
     resolvers,
     tracing: true,
-    dataSources: () => ({
-        dogAPI: new DogAPI(),
-        jsonPlaceholderAPI: new JsonPlaceHolderAPI(),
-    })
+    dataSources: () => {
+        return {
+            dogAPI: new DogAPI(),
+            jsonPlaceholderAPI: new JsonPlaceHolderAPI(),
+            catAPI: new CatAPI(),
+        }
+    },
+    context: () => {
+        return {
+            catApikey: process.env.CAT_API_KEY
+        }
+    }
 });
 
 // Middleware設定をする graphqlをエンドポイントに付与する
