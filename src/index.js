@@ -6,6 +6,7 @@ import schema from './schema';
 import resolvers from './resolvers';
 import DogAPI from './restServices/dogAPI';
 import JsonPlaceHolderAPI from './restServices/jsonPlaceholderAPI';
+import CatAPI from "./restServices/catAPI";
 
 // appに向かっていろいろ設定する
 const app = express();
@@ -25,6 +26,7 @@ const server = new ApolloServer({
     dataSources: () => ({
         dogAPI: new DogAPI(),
         jsonPlaceholderAPI: new JsonPlaceHolderAPI(),
+        catAPI: new CatAPI(),
     })
 });
 
