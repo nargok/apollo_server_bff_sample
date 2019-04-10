@@ -10,18 +10,24 @@ class CatAPI extends RESTDataSource {
         request.headers.set('x-api-key', this.context.catApikey);
     }
 
-    // willSendRequest(request) {
-    //     console.log(this.context.catApikey);
-    //     request.headers.set('Authorization', this.context.catApikey);
-    //     // request.headers.set('x-api-key', this.context.catApikey);
-    // }
-
     async getCatImages() {
         const res = await this.get("images/search");
         const item = res[0];
         return {
             id: item.id,
             image: item.url
+        }
+    }
+
+    async getFavorites() {
+        const res = await this.get("favourites");
+        console.log(res);
+        const edges = []
+        res.map(item =>
+            edges.push({id: item.image_id, image: item.image.url })
+        );
+        return {
+            edges
         }
     }
 }

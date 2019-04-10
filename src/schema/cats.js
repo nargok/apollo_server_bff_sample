@@ -5,13 +5,21 @@ export default gql`
     """
     ランダムな猫の画像を返す
     """
-    randomCat: Cat    
+    randomCat: Cat
+    favorites:  CatList
+
   }
   
   type Cat {
     id: String
     image: String
   }
+  
+  type CatList {
+    edges: [Cat]
+  }
+  
+  
   
   
 `;
