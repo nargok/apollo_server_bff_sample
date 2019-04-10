@@ -1,5 +1,6 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
+import dotenv from 'dotenv';
 
 // schema, resolver, restServiceをimport
 import schema from './schema';
@@ -8,6 +9,7 @@ import DogAPI from './restServices/dogAPI';
 import JsonPlaceHolderAPI from './restServices/jsonPlaceholderAPI';
 import CatAPI from "./restServices/catAPI";
 
+dotenv.config();
 // appに向かっていろいろ設定する
 const app = express();
 
