@@ -18,18 +18,23 @@ const app = express();
 // REST APIとの通信設定をする
 
 // resolverをつくる こっちはObject
-
-
 // ApolloServerの設定をする
 const server = new ApolloServer({
     typeDefs: schema,
     resolvers,
     tracing: true,
-    dataSources: () => ({
-        dogAPI: new DogAPI(),
-        jsonPlaceholderAPI: new JsonPlaceHolderAPI(),
-        catAPI: new CatAPI(),
-    })
+    dataSources: () => {
+        return {
+            dogAPI: new DogAPI(),
+            jsonPlaceholderAPI: new JsonPlaceHolderAPI(),
+            catAPI: new CatAPI(),
+        }
+    },
+    context: () => {
+        return {
+            catApikey: process.env.CAT_API_KEY
+        }
+    }
 });
 
 // Middleware設定をする graphqlをエンドポイントに付与する
