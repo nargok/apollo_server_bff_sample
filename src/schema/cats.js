@@ -9,6 +9,10 @@ export default gql`
     favorites:  CatList
 
   }
+ 
+  extend type Mutation {
+    saveFavorites(image_id: String!, sub_id: String!): Boolean
+  }
   
   type Cat {
     id: String
@@ -18,8 +22,5 @@ export default gql`
   type CatList {
     edges: [Cat]
   }
-  
-  
-  
   
 `;
