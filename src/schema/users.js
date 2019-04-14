@@ -24,6 +24,13 @@ export default gql`
     認証トークンを取得する
     """
     obtainToken(username: String!, password: String!): Token
+
+    """
+    認証トークンを検証する
+    """
+    verifyToken(token: String!): Token
+    
+    
   }
   
   type User {

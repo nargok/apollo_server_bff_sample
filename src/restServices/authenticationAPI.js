@@ -11,11 +11,21 @@ class AuthenticationAPI extends RESTDataSource {
       username: username,
       password: password
     });
-            console.log(res.token);
     return {
       token: res.token,
     }
   }
+
+  async verifyJWTtoken(token) {
+    const res = await this.post("api_token_verify", {
+      token: token
+    });
+    return {
+      token: res.token,
+    }
+  }
+
+
 }
 
 export default AuthenticationAPI;

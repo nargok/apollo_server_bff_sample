@@ -25,6 +25,9 @@ export default {
     },
     obtainToken: (parent, { username, password}, { dataSources }) => {
       return dataSources.authAPI.obtainJWTtoken(username, password);
+    },
+    verifyToken: (parent, { token }, { dataSources }) => {
+      return dataSources.authAPI.verifyJWTtoken(token);
     }
   }
 };
