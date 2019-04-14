@@ -1,3 +1,4 @@
+import { UserInputError } from 'apollo-server';
 import {users} from "../mockData";
 
 export default {
@@ -23,8 +24,14 @@ export default {
 
       return user;
     },
-    obtainToken: (parent, { username, password}, { dataSources }) => {
-      return dataSources.authAPI.obtainJWTtoken(username, password);
+    obtainToken: async  (parent, { username, password}, { dataSources }) => {
+      try {
+        return await dataSources.authAPI.obtainJWTtoken(username, password);
+      } catch (e) {
+        console.log("status code: " + e.extensions.response.status);
+        console.log(e.extensions.response.body);
+        throw new UserInputError('Failed to get JWT with user input')
+      }
     },
     verifyToken: (parent, { token }, { dataSources }) => {
       return dataSources.authAPI.verifyJWTtoken(token);
