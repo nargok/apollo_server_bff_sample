@@ -11,6 +11,7 @@ export default gql`
     ユーザの一覧を返す
     """
     users: [User]
+    
   }
   
   extend type Mutation {
@@ -18,9 +19,19 @@ export default gql`
     ユーザを追加する
     """
     createUser(username: String!): User
+
+    """
+    認証トークンを取得する
+    """
+    obtainToken(username: String!, password: String!): Token
   }
   
   type User {
     username: String!
   }
+  
+  type Token {
+    token: String!
+  }
+  
 `;

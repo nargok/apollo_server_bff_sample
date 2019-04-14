@@ -22,6 +22,9 @@ export default {
       users.push(user);
 
       return user;
+    },
+    obtainToken: (parent, { username, password}, { dataSources }) => {
+      return dataSources.authAPI.obtainJWTtoken(username, password);
     }
   }
 };

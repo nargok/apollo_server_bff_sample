@@ -8,6 +8,7 @@ import resolvers from './resolvers';
 import DogAPI from './restServices/dogAPI';
 import JsonPlaceHolderAPI from './restServices/jsonPlaceholderAPI';
 import CatAPI from "./restServices/catAPI";
+import AuthenticationAPI from "./restServices/authenticationAPI";
 
 dotenv.config();
 // appに向かっていろいろ設定する
@@ -28,6 +29,7 @@ const server = new ApolloServer({
             dogAPI: new DogAPI(),
             jsonPlaceholderAPI: new JsonPlaceHolderAPI(),
             catAPI: new CatAPI(),
+            authAPI: new AuthenticationAPI(),
         }
     },
     context: () => {
