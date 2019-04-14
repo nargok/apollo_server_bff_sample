@@ -24,6 +24,10 @@ const server = new ApolloServer({
     typeDefs: schema,
     resolvers,
     tracing: true,
+    formatError: error => {
+      console.log(error);
+      return error;
+    },
     dataSources: () => {
         return {
             dogAPI: new DogAPI(),
