@@ -35,9 +35,11 @@ export default {
     },
     verifyToken: (parent, { token }, { dataSources }) => {
       return dataSources.authAPI.verifyJWTtoken(token);
+      // error expire(UNAUTHENTICATED) or others
     },
     refreshToken: (parent, { token }, { dataSources }) => {
       return dataSources.authAPI.refreshJWTtoken(token);
+      // またDRF jwtの基本設定を変えないようにしてexpire(UNAUTHENTICATED)をさせたままにしよう
     }
   }
 };
