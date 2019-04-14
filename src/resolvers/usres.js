@@ -28,6 +28,9 @@ export default {
     },
     verifyToken: (parent, { token }, { dataSources }) => {
       return dataSources.authAPI.verifyJWTtoken(token);
+    },
+    refreshToken: (parent, { token }, { dataSources }) => {
+      return dataSources.authAPI.refreshJWTtoken(token);
     }
   }
 };

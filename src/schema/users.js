@@ -30,6 +30,10 @@ export default gql`
     """
     verifyToken(token: String!): Token
     
+    """
+    トークンをリフレッシュする
+    """
+    refreshToken(token: String!): Token
     
   }
   

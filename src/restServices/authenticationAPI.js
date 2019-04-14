@@ -25,7 +25,14 @@ class AuthenticationAPI extends RESTDataSource {
     }
   }
 
-
+  async refreshJWTtoken(token) {
+    const res = await this.post("api-token-refresh/", {
+      token: token
+    });
+    return {
+      token: res.token,
+    }
+  }
 }
 
 export default AuthenticationAPI;
