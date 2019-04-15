@@ -10,6 +10,10 @@ export default {
     },
     users: () => {
       return users;
+    },
+    usersFromExternalService: async (parent, args, { dataSources }) => {
+      // TODO エラーハンドリングを入れる
+      return dataSources.authAPI.getUserList();
     }
   },
   Mutation: {
@@ -43,9 +47,9 @@ export default {
         throw new ApolloError("Failed to verify JWT token", "VERIFICATION_ERROR");
       }
     },
-    refreshToken: async (parent, { token }, { dataSources }) => {
+    refreshToken: async (parent, { refresh }, { dataSources }) => {
       try {
-        return await dataSources.authAPI.refreshJWTtoken(token);
+        return await dataSources.authAPI.refreshJWTtoken(refresh);
       } catch (e) {
         console.log("status code: " + e.extensions.response.status);
         console.log(e.extensions.response.body);

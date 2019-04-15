@@ -12,6 +12,10 @@ export default gql`
     """
     users: [User]
     
+    """
+    外部サービスからのユーザ一覧を返す
+    """
+    usersFromExternalService: [User]
   }
   
   extend type Mutation {
@@ -28,12 +32,12 @@ export default gql`
     """
     認証トークンを検証する
     """
-    verifyToken(token: String!): Token
+    verifyToken(token: String!): Boolean
     
     """
     トークンをリフレッシュする
     """
-    refreshToken(token: String!): Token
+    refreshToken(refresh: String!): AccessToken
     
   }
   
@@ -42,7 +46,12 @@ export default gql`
   }
   
   type Token {
-    token: String!
+    access: String!
+    refresh: String!
+  }
+  
+  type AccessToken {
+    access: String!
   }
   
 `;
