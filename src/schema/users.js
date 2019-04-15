@@ -37,7 +37,7 @@ export default gql`
     """
     トークンをリフレッシュする
     """
-    refreshToken(token: String!): Token
+    refreshToken(refresh: String!): AccessToken
     
   }
   
@@ -48,6 +48,10 @@ export default gql`
   type Token {
     access: String!
     refresh: String!
+  }
+  
+  type AccessToken {
+    access: String!
   }
   
 `;

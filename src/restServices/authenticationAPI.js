@@ -29,12 +29,12 @@ class AuthenticationAPI extends RESTDataSource {
     return true
   }
 
-  async refreshJWTtoken(token) {
-    const res = await this.post("api-token-refresh/", {
-      token: token
+  async refreshJWTtoken(refreshToken) {
+    const res = await this.post("api/token/refresh/", {
+      refresh: refreshToken
     });
     return {
-      token: res.token,
+      access: res.access,
     }
   }
 
