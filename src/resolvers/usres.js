@@ -1,4 +1,4 @@
-import { UserInputError } from 'apollo-server';
+import { UserInputError, ApolloError } from 'apollo-server';
 import {users} from "../mockData";
 
 export default {
@@ -33,13 +33,24 @@ export default {
         throw new UserInputError('Failed to get JWT with user input')
       }
     },
-    verifyToken: (parent, { token }, { dataSources }) => {
-      return dataSources.authAPI.verifyJWTtoken(token);
-      // error expire(UNAUTHENTICATED) or others
+    verifyToken: async (parent, { token }, { dataSources }) => {
+      try {
+        return await dataSources.authAPI.verifyJWTtoken(token);
+      } catch (e) {
+        console.log("status code: " + e.extensions.response.status);
+        console.log(e.extensions.response.body);
+        // ApolloErrorを使うときは、第１引数にエラーメッセージ、第２引数にエラーコードを指定する。どちらもString
+        throw new ApolloError("Failed to verify JWT token", "VERIFICATION_ERROR");
+      }
     },
-    refreshToken: (parent, { token }, { dataSources }) => {
-      return dataSources.authAPI.refreshJWTtoken(token);
-      // またDRF jwtの基本設定を変えないようにしてexpire(UNAUTHENTICATED)をさせたままにしよう
+    refreshToken: async (parent, { token }, { dataSources }) => {
+      try {
+        return await dataSources.authAPI.refreshJWTtoken(token);
+      } catch (e) {
+        console.log("status code: " + e.extensions.response.status);
+        console.log(e.extensions.response.body);
+        throw new ApolloError("Failed to refresh JWT token", "TOKEN_REFRESH_ERROR");
+      }
     }
   }
 };
