@@ -12,6 +12,10 @@ export default gql`
     """
     users: [User]
     
+    """
+    外部サービスからのユーザ一覧を返す
+    """
+    usersFromExternalService: [User]
   }
   
   extend type Mutation {

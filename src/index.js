@@ -36,9 +36,11 @@ const server = new ApolloServer({
             authAPI: new AuthenticationAPI(),
         }
     },
-    context: () => {
+    context: ({ req }) => {
+        const token = req.headers.authorization || '';
         return {
-            catApikey: process.env.CAT_API_KEY
+            catApikey: process.env.CAT_API_KEY,
+            authenticationAPIKey: token
         }
     }
 });

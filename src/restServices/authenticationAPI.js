@@ -6,6 +6,10 @@ class AuthenticationAPI extends RESTDataSource {
     this.baseURL = "http://127.0.0.1:8000/";
   }
 
+  willSendRequest(request) {
+    request.headers.set('Authorization', this.context.authenticationAPIKey);
+  }
+
   async obtainJWTtoken(username, password) {
     const res = await this.post("obtain_jwt_token", {
       username: username,
@@ -32,6 +36,15 @@ class AuthenticationAPI extends RESTDataSource {
     return {
       token: res.token,
     }
+  }
+
+  async getUserList() {
+    const res = await this.get("sample_app/users/");
+    const users = [];
+    res.map(item =>
+        users.push({ username: item.username} )
+    );
+    return users;
   }
 }
 

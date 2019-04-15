@@ -10,6 +10,9 @@ export default {
     },
     users: () => {
       return users;
+    },
+    usersFromExternalService: async (parent, args, { dataSources }) => {
+      return dataSources.authAPI.getUserList();
     }
   },
   Mutation: {
