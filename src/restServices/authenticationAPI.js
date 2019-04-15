@@ -11,12 +11,13 @@ class AuthenticationAPI extends RESTDataSource {
   }
 
   async obtainJWTtoken(username, password) {
-    const res = await this.post("obtain_jwt_token", {
+    const res = await this.post("api/token/", {
       username: username,
       password: password
     });
     return {
-      token: res.token,
+      access: res.access,
+      refresh: res.refresh
     }
   }
 

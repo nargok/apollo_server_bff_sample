@@ -46,7 +46,8 @@ export default gql`
   }
   
   type Token {
-    token: String!
+    access: String!
+    refresh: String!
   }
   
 `;

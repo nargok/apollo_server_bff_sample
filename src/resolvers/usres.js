@@ -12,6 +12,7 @@ export default {
       return users;
     },
     usersFromExternalService: async (parent, args, { dataSources }) => {
+      // TODO エラーハンドリングを入れる
       return dataSources.authAPI.getUserList();
     }
   },
