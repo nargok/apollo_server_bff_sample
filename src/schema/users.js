@@ -32,7 +32,7 @@ export default gql`
     """
     認証トークンを検証する
     """
-    verifyToken(token: String!): Token
+    verifyToken(token: String!): Boolean
     
     """
     トークンをリフレッシュする
