@@ -39,6 +39,10 @@ class AuthenticationAPI extends RESTDataSource {
   }
 
   async getUserList() {
+        console.log("================= START DEBUG ==================");
+        console.log(this);
+        console.log("================= END DEBUG ==================");
+
     const res = await this.get("sample_app/users/");
     const users = [];
     res.map(item =>
