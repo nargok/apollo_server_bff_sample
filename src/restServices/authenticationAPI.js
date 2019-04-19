@@ -7,7 +7,11 @@ class AuthenticationAPI extends RESTDataSource {
   }
 
   willSendRequest(request) {
-    request.headers.set('Authorization', this.context.authenticationAPIKey);
+    console.log("============ START DEBUG willSendRequest =============");
+    console.log({request});
+    console.log(this.context.authenticationAPIKey);
+    console.log("============ END DEBUG willSendRequest   =============");
+    request.headers.set('Authorization', `Bearer ${this.context.authenticationAPIKey}`);
   }
 
   async obtainJWTtoken(username, password) {
